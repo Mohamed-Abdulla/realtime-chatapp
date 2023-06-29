@@ -1,16 +1,36 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { pusherClient } from "@/lib/pusher";
+import { cn, toPusherKey } from "@/lib/utils";
 import { Message } from "@/lib/validation/message";
-import { FC, useRef, useState } from "react";
+import Image from "next/image";
+import { FC, useEffect, useRef, useState } from "react";
 
 interface MessagesProps {
   initialMessages: Message[];
   sessionId: string;
+  chatId: string;
+  sessionImg: string | null | undefined;
+  chatPartner: User;
 }
 
-const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
+const Messages: FC<MessagesProps> = ({ initialMessages, sessionId, chatId, chatPartner, sessionImg }) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const scrollDownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    pusherClient.subscribe(toPusherKey(`chat:${chatId}`));
+
+    const messageHandler = (message: Message) => {
+      setMessages((prev) => [message, ...prev]);
+    };
+
+    pusherClient.bind("incoming-message", messageHandler);
+
+    return () => {
+      pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`));
+      pusherClient.unbind("incoming-message", messageHandler);
+    };
+  }, [sessionId, chatId]);
 
   const formatTimestamp = (timestamp: number) => {
     const date = new Date(timestamp);
@@ -58,7 +78,15 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
                   "order-1": !isCurrentUser,
                   invisible: hasNextMessageFromSameUser,
                 })}
-              ></div>
+              >
+                <Image
+                  fill
+                  src={isCurrentUser ? (sessionImg as string) : chatPartner.image}
+                  alt="Profile picture"
+                  referrerPolicy="no-referrer"
+                  className="rounded-full"
+                />
+              </div>
             </div>
           </div>
         );
