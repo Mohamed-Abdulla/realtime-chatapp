@@ -33,6 +33,8 @@ export const authOptions: NextAuthOptions = {
       clientSecret: getGoogleCredentials().clientSecret,
     }),
   ],
+  debug: true,
+  secret: "supersecret",
   callbacks: {
     async jwt({ token, user }) {
       //get user credentials from db by passing id from jwt
