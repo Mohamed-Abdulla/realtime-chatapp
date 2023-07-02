@@ -1,9 +1,9 @@
 "use client";
 
 import Button from "@/components/UI/Button";
+import { signIn } from "next-auth/react";
 import { FC, useState } from "react";
 import { toast } from "react-hot-toast";
-import { signIn } from "next-auth/react";
 interface pageProps {}
 
 const Page: FC<pageProps> = () => {
