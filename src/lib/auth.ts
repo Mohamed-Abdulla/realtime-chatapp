@@ -69,8 +69,8 @@ export const authOptions: NextAuthOptions = {
     // redirect() {
     //   return "/dashboard";
     // },
-    redirect: async () => {
-      return Promise.resolve("/dashboard");
+    redirect: async (url: any) => {
+      return Promise.resolve(url);
     },
   },
 };
