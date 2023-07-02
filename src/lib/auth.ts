@@ -34,7 +34,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   debug: true,
-  secret: "supersecret",
   callbacks: {
     async jwt({ token, user }) {
       //get user credentials from db by passing id from jwt
