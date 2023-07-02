@@ -64,9 +64,10 @@ export const authOptions: NextAuthOptions = {
 
       return session;
     },
-    redirect() {
-      return "https://connect-abd.vercel.app/dashboard";
+    async redirect() {
+      return "/dashboard";
     },
+
     // redirect: async (url: any) => {
     //   return Promise.resolve(url);
     // },
