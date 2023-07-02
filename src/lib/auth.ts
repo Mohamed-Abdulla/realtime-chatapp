@@ -66,8 +66,11 @@ export const authOptions: NextAuthOptions = {
 
       return session;
     },
-    redirect() {
-      return "/dashboard";
+    // redirect() {
+    //   return "/dashboard";
+    // },
+    redirect: async () => {
+      return Promise.resolve("/dashboard");
     },
   },
 };
