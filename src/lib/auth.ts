@@ -66,11 +66,11 @@ export const authOptions: NextAuthOptions = {
 
       return session;
     },
-    // redirect() {
-    //   return "/dashboard";
-    // },
-    redirect: async (url: any) => {
-      return Promise.resolve(url);
+    redirect() {
+      return "/dashboard";
     },
+    // redirect: async (url: any) => {
+    //   return Promise.resolve(url);
+    // },
   },
 };
