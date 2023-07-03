@@ -18,7 +18,6 @@ function getGoogleCredentials() {
 
   return { clientId, clientSecret };
 }
-
 export const authOptions: NextAuthOptions = {
   adapter: UpstashRedisAdapter(db), // we declare what should happen when user log in
   session: {
