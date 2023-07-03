@@ -45,7 +45,7 @@ export const authOptions: NextAuthOptions = {
 
         return token;
       }
-      const dbUser = JSON.parse(dbUserResult);
+      const dbUser = JSON.parse(dbUserResult) as User;
       return {
         id: dbUser.id,
         name: dbUser.name,
@@ -53,6 +53,7 @@ export const authOptions: NextAuthOptions = {
         picture: dbUser.image,
       };
     },
+
     //getting session details from session
     async session({ session, token }) {
       if (token) {
@@ -64,12 +65,11 @@ export const authOptions: NextAuthOptions = {
 
       return session;
     },
-    redirect() {
-      return "/dashboard";
-    },
-
-    // redirect: async (url: any) => {
-    //   return Promise.resolve(url);
+    // redirect() {
+    //   return "/dashboard";
     // },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
   },
 };
