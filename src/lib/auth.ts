@@ -64,11 +64,11 @@ export const authOptions: NextAuthOptions = {
 
       return session;
     },
-    // redirect() {
-    //   return "/dashboard";
-    // },
-    async redirect({ url, baseUrl }) {
-      return baseUrl;
+    redirect() {
+      return "/dashboard";
     },
+    // async redirect({ url, baseUrl }) {
+    //   return baseUrl;
+    // },
   },
 };
