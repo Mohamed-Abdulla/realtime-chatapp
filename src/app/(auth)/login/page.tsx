@@ -12,7 +12,9 @@ const Page: FC<pageProps> = () => {
   async function loginWithGoogle() {
     setIsLoading(true);
     try {
-      await signIn("google");
+      await signIn("google", {
+        callbackUrl: "/dashboard",
+      });
     } catch (error) {
       toast.error("Something went wrong with your login.");
     } finally {
